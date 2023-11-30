@@ -13,15 +13,14 @@ function Footer() {
                 <header className="footer-title text-xl text-black">Company</header> 
                 <a className="link link-hover">Home</a>
                 <a className="link link-hover">About Us</a>
-                <a className="link link-hover">Contact</a>
-                <a className="link link-hover">Menu</a>
+                <a className="link link-hover" href='#restaurant'>Restaurant</a>
+                <a className="link link-hover">Book</a>
             </nav> 
             <nav>
                 <header className="footer-title text-xl text-black">Company</header> 
                 <a className="link link-hover">FAQ</a>
                 <a className="link link-hover">Receipt</a>
                 <a className="link link-hover">Download</a>
-                <a className="link link-hover">Contact</a>
             </nav> 
             <nav>
                 <header className="footer-title text-xl text-black">Support</header> 

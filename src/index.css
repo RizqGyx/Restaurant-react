@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+    scroll-behavior: smooth;
+}
+
 .wrap-Hero {
     background: linear-gradient(150deg,rgba(27,27,27,.5),rgba(27,27,27,.5)), url(/Hero.jpg) no-repeat 100%;
     background-size: cover;

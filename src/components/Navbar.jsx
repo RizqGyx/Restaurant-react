@@ -13,8 +13,8 @@ function Navbar() {
           <ul className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
             <li><a>Home</a></li>
             <li><a>About Us</a></li>
-            <li><a>Contact</a></li>
-            <li><a>Menu</a></li>
+            <li><a href='#restaurant'>Restaurant</a></li>
+            <li><a>Book</a></li>
           </ul>
         </div>
         <div>
@@ -25,8 +25,8 @@ function Navbar() {
         <ul className="menu menu-horizontal px-1 text-xl">
           <li><a className='hover:bg-orange-600 hover:text-white'>Home</a></li>
           <li><a className='hover:bg-orange-600 hover:text-white'>About Us</a></li>
-          <li><a className='hover:bg-orange-600 hover:text-white'>Contact</a></li>
-          <li><a className='hover:bg-orange-600 hover:text-white'>Menu</a></li>
+          <li><a className='hover:bg-orange-600 hover:text-white' href='#restaurant'>Restaurant</a></li>
+          <li><a className='hover:bg-orange-600 hover:text-white'>Book</a></li>
         </ul>
       </div>
       <div className="navbar-end flex gap-5">
