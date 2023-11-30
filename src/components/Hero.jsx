@@ -2,13 +2,17 @@ import React from 'react'
 
 function Hero() {
   return (
-    <div className="hero min-h-screen bg-white">
-      <div className="hero-content flex-col lg:flex-row-reverse">
-        <img src="https://daisyui.com/images/stock/photo-1635805737707-575885ab0820.jpg" className="max-w-sm rounded-lg shadow-2xl" />
-        <div>
-          <h1 className="text-5xl font-bold">Box Office News!</h1>
-          <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-          <button className="btn btn-primary">Get Started</button>
+    <div className='wrap-Hero'>
+      <div className="hero h-[75vh] w-11/12 mx-auto">
+        <div className="hero-content">
+          <div>
+            <h1 className="text-5xl font-bold text-white">Enjoy Delicious <span className='text-orange-600'>Food</span> With Us</h1>
+            <p className="py-6">Get the best quality and most delicious western food in the world, you can get them all at our website.</p>
+            <div className='flex gap-8'>
+              <button className="btn bg-orange-600 rounded-full hover:bg-orange-700 w-40 text-white font-bold border-none">Add to Cart</button>
+              <button className="btn bg-white rounded-full w-40 text-orange-600 hover:text-orange-700 hover:bg-white hover:border-orange-700 font-bold border-2 border-orange-600">Book For Event</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

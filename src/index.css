@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.wrap-Hero {
+    background: linear-gradient(150deg,rgba(27,27,27,.5),rgba(27,27,27,.5)), url(/Hero.jpg) no-repeat 100%;
+    background-size: cover;
+}
