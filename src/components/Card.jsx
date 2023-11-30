@@ -1,12 +1,13 @@
 import React from "react";
 import { FaStar } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 
-function Card({ imgUrl, restName, price, avgReview, location, foodCategory }) {
+function Card({ imgUrl, restName, price, avgReview, location, foodCategory, id }) {
+    const navigate = useNavigate();
+
     return (
-        <div className="card w-96 bg-white shadow-2xl">
-            <figure style={{ width: '100%', height: '200px' }}>
-                <img src={imgUrl} alt={restName} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-            </figure>
+        <div className="card h-96 max-w-[384px] overflow-hidden bg-white shadow-2xl cursor-pointer" onClick={() => {navigate(`/restaurant/${id}`)}}>
+            <img src={imgUrl} alt={restName} className="aspect-[17/9] w-full rounded object-cover" />            
             <div className="card-body font-bold">
                 <h2 className="card-title text-black">
                     {restName}

@@ -34,9 +34,10 @@ const Restaurant = () => {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {filteredRestaurants.slice(0, displayCount).map((restaurant, index) => (
           <Card
+            id={restaurant.id}
             key={index}
             imgUrl={restaurant.image}
             restName={restaurant.name}
@@ -50,8 +51,7 @@ const Restaurant = () => {
       {!showAll && (
         <button
           className="bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-10 rounded-full mt-4"
-          onClick={handleLoadMore}
-        >
+          onClick={handleLoadMore}>
           See More
         </button>
       )}

@@ -1,15 +1,14 @@
-import Navbar from "./components/Navbar"
-import Footer from "./components/Footer"
-import Hero from "./components/Hero"
-import Restaurant from "./components/Restaurant"
+import { Route, Routes } from "react-router-dom"
+import Home from "./pages/Home"
+import DetailRest from "./pages/DetailRest"
 
 function App() {
   return (
     <>
-      <Navbar />
-      <Hero />
-      <Restaurant />
-      <Footer />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/restaurant/:id" element={<DetailRest />} />
+      </Routes>
     </>
   )
 }
