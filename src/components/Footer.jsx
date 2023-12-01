@@ -11,9 +11,9 @@ function Footer() {
             </aside> 
             <nav>
                 <header className="footer-title text-xl text-black">Company</header> 
-                <a className="link link-hover">Home</a>
-                <a className="link link-hover">About Us</a>
-                <a className="link link-hover" href='#restaurant'>Restaurant</a>
+                <a className="link link-hover" href='/#'>Home</a>
+                <a className="link link-hover" href='/#about'>About Us</a>
+                <a className="link link-hover" href='/#restaurant'>Restaurant</a>
                 <a className="link link-hover">Book</a>
             </nav> 
             <nav>

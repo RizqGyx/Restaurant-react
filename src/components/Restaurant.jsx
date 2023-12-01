@@ -18,7 +18,7 @@ const Restaurant = () => {
   );
 
   return (
-    <div className='w-full md:w-11/12 mx-auto pt-20 flex items-center flex-col' id='restaurant'>
+    <div className='w-full md:w-11/12 mx-auto pt-5 flex items-center flex-col' id='restaurant'>
       <h2 className='text-orange-600 font-bold text-4xl pb-5'>Discover Our Restaurant</h2>
       <div className="relative">
         <div className="flex items-center">
