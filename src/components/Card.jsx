@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { FaStar, FaHeart } from "react-icons/fa";
-import { AiOutlineShoppingCart } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 
 function Card({ imgUrl, restName, price, avgReview, location, foodCategory, id }) {
+    const navigate = useNavigate();
     const [isFavorite, setIsFavorite] = useState(false);
 
     useEffect(() => {
@@ -20,7 +21,7 @@ function Card({ imgUrl, restName, price, avgReview, location, foodCategory, id }
     };
 
     return (
-        <div className="card h-96 max-w-[384px] overflow-hidden bg-white shadow-2xl cursor-pointer relative">
+        <div className="card h-96 max-w-[384px] overflow-hidden bg-white shadow-2xl cursor-pointer relative" onClick={() => {navigate(`/restaurant/${id}`)}}> 
             <div className="absolute top-2 right-2">
                 <button className="focus:outline-none" onClick={handleFavoriteClick}>
                     {isFavorite ? (
