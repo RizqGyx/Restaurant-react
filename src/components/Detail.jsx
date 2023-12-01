@@ -4,10 +4,10 @@ const Detail = ({ restaurant }) => {
   return (
     <div className="max-w-2xl p-5 mx-auto">
       <div className="bg-white shadow-md rounded-lg overflow-hidden">
-        <img src={restaurant.image} alt={restaurant.name} className="w-full h-64 object-cover object-center" />
+        <img src={restaurant.image} alt={restaurant.name} className="w-full h-auto object-cover object-center" />
 
         <div className="p-4">
-          <h2 className="text-3xl font-semibold mb-2">{restaurant.name}</h2>
+          <h2 className="text-3xl font-semibold mb-2 text-black">{restaurant.name}</h2>
           <p className="text-gray-600 mb-4">{restaurant.location}</p>
 
           <div className="flex items-center mb-4">

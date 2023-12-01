@@ -31,7 +31,7 @@ function Navbar() {
           </ul>
         </div>
         <div className="navbar-end flex gap-5">
-          <GrFavorite className="hover:text-orange-700 text-3xl font-bold cursor-pointer" />
+          <a href="/favorite"><GrFavorite className="hover:text-orange-700 text-3xl font-bold cursor-pointer" /></a>
           <a className="btn rounded-full px-10 text-xl hover:bg-orange-700 bg-orange-600 border-none text-white">Sign In</a>
         </div>
       </div>
