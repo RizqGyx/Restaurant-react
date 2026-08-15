@@ -16,18 +16,6 @@ Aplikasi web untuk menemukan dan memesan meja di restoran western: situs editori
 
 ![Homepage](docs/screenshots/home.jpg)
 
-## Overview
-
-westCorner adalah aplikasi frontend murni (tanpa backend) yang menggarap tiga sisi sekaligus:
-
-- **Situs publik** — landing page editorial dengan hero full-bleed, marquee partner, section about bergaya majalah, dan katalog restoran yang bisa dicari, difilter per jenis masakan, dan diurutkan berdasarkan rating, jumlah ulasan, atau harga.
-- **Halaman detail bergaya Airbnb** — mosaic foto dengan lightbox yang bisa dinavigasi keyboard, panel booking sticky, menu andalan, fasilitas, jam buka mingguan dengan hari ini di-highlight, breakdown rating beserta ulasan individual, peta lokasi, dan rekomendasi restoran serupa.
-- **Alur reservasi & daftar simpanan** — form booking dua tahap dengan slot waktu yang dihitung otomatis dari jam buka tiap restoran, validasi inline, ringkasan biaya yang ikut berubah realtime, layar konfirmasi berkode referensi, plus daftar restoran tersimpan yang bertahan di `localStorage` dan tersinkron ke seluruh komponen.
-
-Data katalog di-bundle di dalam repo (tidak ada API/database), tapi seluruh logika di atasnya nyata: jam buka yang melewati tengah malam ditangani benar, status buka/tutup dihitung realtime, slot reservasi berhenti 60 menit sebelum tutup, dan distribusi bintang direkonstruksi supaya jumlahnya konsisten dengan total ulasan.
-
-Project ini dibangun bertahap — dari template awal berbasis daisyUI, ke redesign menyeluruh dengan design system sendiri, lalu direfaktor ke arsitektur Atomic Design — termasuk menemukan dan memperbaiki beberapa bug non-trivial di sepanjang jalan (lihat [Engineering Highlights](#engineering-highlights)).
-
 ## Fitur Utama
 
 ### Situs Publik
@@ -55,46 +43,6 @@ Project ini dibangun bertahap — dari template awal berbasis daisyUI, ke redesi
 ### Daftar Simpanan
 - Simpan/hapus restoran dari card mana pun maupun dari halaman detail
 - State favorit dibagikan lewat `useSyncExternalStore` di atas `localStorage`, jadi satu klik langsung tercermin di card, tombol detail, **dan** penghitung di navbar — termasuk kalau diubah dari tab browser lain
-
-## Engineering Highlights
-
-Beberapa keputusan & perbaikan non-trivial selama membangun project ini — bagian ini sengaja
-ditulis karena daftar fitur saja tidak menunjukkan cara berpikirnya:
-
-- **Embed peta pihak ketiga yang diam-diam rusak.** Halaman detail awalnya memakai `<iframe>`
-  embed resmi OpenStreetMap. Saat diperiksa lewat screenshot headless, yang muncul bukan peta
-  melainkan panel error biru selebar section: embed itu sekarang **mewajibkan WebGL**, yang tidak
-  tersedia di banyak lingkungan. Diganti dengan peta yang dirakit sendiri dari tile raster
-  (`<img>` biasa) — konversi lat/lon ke koordinat tile Web Mercator dihitung manual, lalu grid
-  tile digeser dengan `transform` supaya titik koordinatnya jatuh persis di tengah container.
-  Kalau satu tile gagal dimuat, yang terlihat cuma latar hangat, bukan frame rusak.
-- **Class Tailwind yang hilang tanpa pesan error.** Backdrop gelap lightbox tidak pernah muncul —
-  halaman di belakangnya hanya ter-blur. Ternyata setup Tailwind ini **hanya meng-compile opacity
-  step bawaan** untuk bentuk polos: `bg-ink-950/95` jadi, `bg-ink-950/97` hilang begitu saja tanpa
-  peringatan apa pun. Ditemukan dengan menelusuri CSS hasil build, bukan menebak. Lima class
-  bermasalah diperbaiki dan aturannya didokumentasikan supaya tidak terulang.
-- **Animasi scroll yang bisa menyembunyikan seluruh isi halaman.** Komponen `Reveal` memakai
-  `IntersectionObserver` dan memulai dari `opacity-0`. Artinya kalau callback observer tidak pernah
-  terpanggil, isi halaman **hilang permanen** — bukan sekadar tidak beranimasi. Ini terlihat nyata
-  saat capture headless memperlihatkan halaman kosong. Ditambahkan failsafe: konten tetap
-  ditampilkan setelah 2 detik apa pun yang terjadi, plus jalur pintas untuk `prefers-reduced-motion`
-  dan browser tanpa `IntersectionObserver`.
-- **Favorit yang tidak pernah update.** Implementasi lama membaca `localStorage` langsung saat
-  render, jadi menekan tombol hati tidak mengubah tampilan komponen lain sampai halaman di-refresh.
-  Diganti dengan `useSyncExternalStore` + custom event: satu sumber kebenaran, tersinkron ke semua
-  komponen sekaligus, dan ikut mendengarkan event `storage` supaya konsisten antar tab. Format key
-  lama (`favorite_<id>`) dipertahankan supaya data pengguna yang sudah ada tidak hilang.
-- **Refactor besar tanpa regresi visual.** Saat memecah `Detail.jsx` (372 baris) menjadi 9 organism
-  dan halaman booking (450 baris) menjadi 3, setiap halaman di-screenshot sebelum dan sesudah lalu
-  tinggi dokumennya dibandingkan — home 4720→4704 px, detail 4966→4968 px — dan alur booking
-  dijalankan ulang sampai layar konfirmasi untuk memastikan tidak ada perilaku yang berubah.
-- **Tanggal selalu waktu lokal, tidak pernah UTC.** `new Date().toISOString()` menggeser hari untuk
-  pengguna di timezone timur — pukul 07:00 WIB masih terhitung hari kemarin. Semua helper tanggal
-  dihitung dari komponen tanggal lokal supaya "hari ini" pada kalender booking benar-benar hari ini.
-- **Lint yang sudah merah sejak awal.** `npm run lint` gagal dengan 91 error di kode awal (rule
-  `react/prop-types` pada project yang tidak pernah memasang package `prop-types`). Diperiksa dulu
-  dengan `git stash` untuk memastikan itu bukan akibat perubahan sendiri, lalu rule-nya dimatikan.
-  Sekarang lint bersih dengan `--max-warnings 0`.
 
 ## Screenshot
 
@@ -128,14 +76,7 @@ ditulis karena daftar fitur saja tidak menunjukkan cara berpikirnya:
 | Peta | Tile raster [OpenStreetMap](https://www.openstreetmap.org) (tanpa dependency peta) |
 | Deploy | [Vercel](https://vercel.com) dengan SPA rewrite |
 
-Tidak ada dependency UI kit. daisyUI yang dipakai versi awal dilepas supaya seluruh tampilan
-dikendalikan design system sendiri — dependency produksi tinggal React, React DOM, React Router,
-dan react-icons.
-
 ## Arsitektur
-
-Struktur folder mengikuti pola **Atomic Design** — tiap lapisan hanya boleh mengimpor ke bawah,
-tidak pernah ke samping atau ke atas:
 
 ```
 src/
@@ -173,60 +114,6 @@ src/
 └── pages/                      Home, RestaurantDetail, Booking, Saved, NotFound
 ```
 
-**Kenapa halaman jadi tipis?** Setiap halaman dirender lewat `PageLayout` yang memegang navbar,
-`<main>`, dan footer. Halaman hanya menyimpan state dan menyusun organism — tidak ada markup
-selain grid layout. Hasilnya `RestaurantDetail.jsx` cuma 94 baris untuk halaman sepanjang itu.
-
-**DRY — setiap potongan yang muncul di lebih dari satu tempat hidup di satu file saja:**
-
-| Komponen bersama | Dipakai di |
-|---|---|
-| `Button` | seluruh call to action, 3 varian × 3 ukuran, tanpa `!important` |
-| `RestaurantGrid` | katalog, daftar simpanan, "you might also like" |
-| `SectionHeading` | about, katalog, banner reservasi, booking, saved |
-| `PriceBreakdown` | panel booking di detail **dan** ringkasan di halaman booking |
-| `useBooking` | panel booking di detail **dan** form booking |
-| `ChipGroup` | filter masakan, slot waktu, pilihan acara |
-| `EmptyState` | hasil pencarian kosong & belum ada simpanan |
-| `Rating` / `Stars` | card, header detail, panel booking, ulasan |
-
-### Design System
-
-Token ada di `tailwind.config.js`, class komponen bersama di `src/index.css`:
-
-| Token | Nilai |
-|---|---|
-| `cream` | latar halaman `#FBF8F4` |
-| `ember-50…950` | oranye brand, `ember-600` warna aksi utama |
-| `ink-50…950` | netral berbias hangat untuk teks, border, permukaan gelap |
-| `font-display` | Fraunces — heading |
-| `font-sans` | Inter — body & UI |
-| `shadow-soft` / `shadow-lift` | elevasi diam & terangkat |
-| `ease-spring` | `cubic-bezier(.22,1,.36,1)`, easing standar |
-
-> **Catatan Tailwind:** setup ini hanya menghasilkan opacity step bawaan untuk bentuk polos
-> (`bg-ink-900/75` jadi, `bg-ink-900/72` hilang diam-diam). Untuk nilai lain, pakai bentuk kurung:
-> `bg-white/[.09]`.
-
-## Data
-
-Sepuluh restoran ada di `src/data/restaurants.js`. Tiap entri membawa kontennya sendiri — nama,
-jenis venue, tagline, deskripsi, chef, tag masakan, kelas harga, telepon, alamat, koordinat, key
-fasilitas, jam buka, dan menu andalan — sisanya diturunkan otomatis saat modul dimuat: foto galeri,
-rentang harga, sampel ulasan, dan distribusi bintang yang jumlahnya direkonsiliasi ke `totalReviews`.
-
-| Helper | Kegunaan |
-|---|---|
-| `img(path, width, quality)` | URL Unsplash sesuai ukuran, supaya thumbnail dan hero tidak mengunduh file yang sama |
-| `getRestaurantById(id)` | lookup untuk route detail |
-| `allCategories` | tag masakan diurutkan per frekuensi, sumber filter chip |
-| `openStatus(restaurant)` | pill buka/tutup realtime, menangani tutup lewat tengah malam |
-| `timeSlotsFor(restaurant, date)` | slot 30 menit, berhenti 60 menit sebelum tutup |
-| `todayISO()` / `weekdayOf(iso)` | helper tanggal waktu lokal (tidak pernah UTC) |
-
-Menambah restoran cukup dengan menambah objek ke `BASE` dengan `id` unik — semua turunannya
-mengikuti otomatis; tambahkan satu foto ke `PHOTOS` supaya punya gambar utama sendiri.
-
 ## Menjalankan Secara Lokal
 
 ### 1. Clone & install
@@ -256,18 +143,3 @@ npm run lint      # eslint, nol warning
 Butuh Node 18 atau lebih baru. Tidak ada environment variable maupun setup database — cukup
 `npm install` lalu jalan. Foto restoran diambil dari Unsplash, jadi tampilan penuh butuh koneksi
 internet.
-
-## Deploy
-
-Sudah dikonfigurasi untuk Vercel. `vercel.json` mengarahkan seluruh path ke `/` supaya route
-client-side tetap resolve saat halaman di-refresh langsung. Host statis lain juga bisa, asal
-SPA fallback-nya disetel sama.
-
-## Batasan
-
-- Katalog bersifat hardcoded — tidak ada API, CMS, atau database di belakangnya.
-- Reservasi dikonfirmasi di sisi UI saja: tidak ada data yang dikirim ke mana pun dan kode
-  referensinya dibuat di browser. Menyambungkan `handleSubmit` di `src/pages/Booking.jsx` ke
-  endpoint sungguhan adalah langkah lanjutan yang paling alami.
-- Favorit tersimpan per perangkat karena memakai `localStorage`.
-- Foto berasal dari Unsplash dan berperan sebagai pengganti foto venue asli.
