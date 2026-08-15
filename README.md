@@ -16,34 +16,6 @@ Aplikasi web untuk menemukan dan memesan meja di restoran western: situs editori
 
 ![Homepage](docs/screenshots/home.jpg)
 
-## Fitur Utama
-
-### Situs Publik
-- Hero full-bleed dengan kolom pencarian yang langsung terhubung ke katalog di bawahnya, plus statistik yang **dihitung dari data** (jumlah restoran, rata-rata rating, total ulasan) — bukan angka yang diketik manual
-- Marquee logo partner dengan loop tanpa sambungan (track digandakan lalu digeser tepat -50%)
-- Katalog restoran: pencarian lintas nama/masakan/area/alamat, filter chip per jenis masakan, 5 opsi pengurutan, paginasi *show more*, dan empty state yang rapi
-- Card restoran bergaya Airbnb: badge editorial, pill status buka/tutup realtime, rating, kisaran harga per orang, dan tombol simpan yang tidak ikut memicu navigasi
-- Animasi masuk saat scroll (`IntersectionObserver`) yang menghormati `prefers-reduced-motion`
-
-### Halaman Detail
-- Mosaic foto 5 gambar di desktop, strip snap-scroll di mobile, dan **lightbox** dengan navigasi panah/`Esc` serta penghitung foto
-- Panel booking sticky: tanggal, jam, jumlah tamu, estimasi tagihan, dan tombol reservasi yang membawa pilihannya ke halaman booking lewat router state
-- Menu andalan dengan harga, fasilitas dengan ikon (bisa di-expand), dan tabel jam buka mingguan dengan hari berjalan di-highlight
-- Breakdown rating 1–5 bintang beserta ulasan individual berikut avatar inisial berwarna konsisten per nama
-- **Peta lokasi** yang dirakit dari tile raster OpenStreetMap + marker brand, plus tautan ke Google Maps
-- Sticky reserve bar menggantikan panel booking di layar mobile
-
-### Reservasi
-- Form dua tahap: pilih restoran/tanggal/tamu/jam/acara, lalu data kontak
-- **Slot waktu dihitung dari jam buka restoran yang dipilih** — setiap 30 menit, berhenti 60 menit sebelum tutup, dan menampilkan pesan "tutup pada hari itu" kalau restorannya libur
-- Validasi inline per field dengan fokus otomatis ke error pertama
-- Panel ringkasan sticky yang mencerminkan pilihan secara realtime beserta estimasi biaya (subtotal + service fee)
-- Layar konfirmasi dengan kode referensi, ringkasan pesanan, dan tautan balik ke restorannya
-
-### Daftar Simpanan
-- Simpan/hapus restoran dari card mana pun maupun dari halaman detail
-- State favorit dibagikan lewat `useSyncExternalStore` di atas `localStorage`, jadi satu klik langsung tercermin di card, tombol detail, **dan** penghitung di navbar — termasuk kalau diubah dari tab browser lain
-
 ## Screenshot
 
 | Homepage | Katalog — pencarian, filter, sorting |
